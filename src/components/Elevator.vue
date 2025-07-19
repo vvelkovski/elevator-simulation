@@ -1,51 +1,39 @@
 <script setup>
-  // import { ref } from 'vue';
-import { TOTAL_FLOORS } from '@/constants/buildingSpecs';
+import { onMounted } from 'vue';
+// TODO: remove this import if I decide to use props for totalFloors
+import { moveToFloor } from '@/utils/elevatorUtils.js';
 
 const props = defineProps({
-  passengers: {
-    type: Number,
-    default: 0,
+  elevator: {
+    type: Object,
+    required: true,
   },
-  currentFloor: {
+  totalFloors: {
     type: Number,
-    default: 0,
-    validator: (value) => value >= 0 && value <= TOTAL_FLOORS,
+    required: true,
   },
-  // destinationFloor: {
-  //   type: Number,
-  //   required: true,
-  // },
-  // direction: {
-  //   type: String,
-  //   required: true,
-  // },
 });
 
-console.log(props);
-
-  // const destinationFloor = ref(props.destinationFloor);
-  // const currentFloor = ref(props.currentFloor);
-  // const direction = ref(props.direction);
-  // const passengers = ref(props.passengers);
-  // const isMoving = ref(false);
-
-  // const move = () => {
-  //   if (direction.value === 'up') {
-  //     currentFloor.value++;
-  //   } else if (direction.value === 'down') {
-  //     currentFloor.value--;
-  //   }
-  // };
-
-  // const openDoors = () => {
-  //   isMoving.value = false;
-  // };
+onMounted(() => {
+  moveToFloor(props.elevator, 5);
+});
 </script>
 
 <template>
   <div class="elevator">
-    I am an elevator
+    <div class="elevator-top">
+      Motor Room
+    </div>
+    <div class="floors-container">
+      <div 
+        v-for="floor in totalFloors" 
+        :key="floor"
+        class="floor"
+        :class="{ 'current-floor': floor === elevator.currentFloor }"
+      >
+        Floor {{ floor }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -56,7 +44,37 @@ console.log(props);
   border: 1px solid var(--vt-c-white);
   position: relative;
   display: flex;
+  flex-direction: column;
+}
+
+.elevator-top {
+  height: 60px;
+  background-color: var(--vt-c-black-mute);
+  display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 12px;
+  color: var(--vt-c-white);
+  border-bottom: 1px solid var(--vt-c-white);
+}
+
+.floors-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.floor {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--vt-c-white-mute);
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.current-floor {
+  background-color: var(--vt-c-black-mute);
 }
 </style>
