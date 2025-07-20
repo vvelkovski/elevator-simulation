@@ -85,3 +85,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@font-face {
+  font-family: 'Digital';
+  src: url('@/assets/fonts/digital-7 (mono).ttf') format('truetype');
+  font-display: swap;
+}

@@ -1,5 +1,6 @@
 <script setup>
 import ElevatorStatus from './ElevatorStatus.vue';
+import ElevatorCar from './ElevatorCar.vue';
 
 defineProps({
   elevator: {
@@ -21,9 +22,8 @@ defineProps({
         v-for="floor in totalFloors" 
         :key="floor"
         class="floor"
-        :class="{ 'current-floor': floor === elevator.currentFloor }"
       >
-        <div class="floor-number">{{ floor }}</div>
+        <ElevatorCar :elevator="elevator" :floor="floor" />
       </div>
     </div>
   </div>
@@ -54,15 +54,5 @@ defineProps({
   font-size: 14px;
   color: var(--vt-c-white-mute);
   transition: background-color 0.3s ease;
-}
-
-.current-floor {
-  background-color: var(--vt-c-black-mute);
-  color: var(--vt-c-green) !important;
-}
-
-.floor-number {
-  font-size: 14px;
-  font-weight: bold;
 }
 </style>

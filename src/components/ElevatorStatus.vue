@@ -13,26 +13,21 @@ defineProps({
   <div class="elevator-status">
     <div class="row">
       <div class="content">
-        <template v-if="elevator.loading">&#8644;</template>
-      </div>
-      <div class="content">
         <template v-if="elevator.direction === Direction.Up">&#8593;</template>
         <template v-else-if="elevator.direction === Direction.Down">&#8595;</template>
         <template v-else>&#8645;</template>
       </div>
-      <div class="content">
+      <div class="content digital-display">
         <span>{{ elevator.currentFloor }}</span>
       </div>
     </div>
-    <div class="content">
-      queue: [{{ elevator.queue.join(', ') }}]
-    </div>
+
   </div>
 </template>
 
 <style scoped>
 .elevator-status {
-  padding: 5px;
+  padding: 0px var(--content-spacing);
   background-color: var(--vt-c-black-mute);
   display: flex;
   flex-direction: column;
@@ -52,5 +47,10 @@ defineProps({
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.digital-display {
+  font-size: 24px;
+  font-family: 'Digital';
 }
 </style>
