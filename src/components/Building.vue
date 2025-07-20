@@ -1,7 +1,8 @@
 <script setup>
 import Elevator from './Elevator.vue';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import { assignElevator, log, initializeLogger } from '@/utils/elevatorUtils.js';
+import { Elevator as ElevatorClass } from '@/classes/elevator.js';
 import Direction from '@/constants/directionEnum.js';
 
 const props = defineProps({
@@ -15,16 +16,15 @@ const props = defineProps({
   },
 });
 
-// Create an array of elevators and initialize them with default values
+// Create an array of Elevator class instances with Vue reactivity
 const elevators = ref(
-  Array.from({ length: props.totalElevators }, (_, index) => ({
-    id: index + 1,
-    currentFloor: 1,
-    queue: [],
-    direction: null,
-    busy: false,
-    loading: false,
-  }))
+  Array.from({ length: props.totalElevators }, (_, index) => {
+    // Create Elevator class instance with logging function
+    const elevatorInstance = new ElevatorClass(index + 1, 1, log);
+    
+    // Wrap in reactive to ensure Vue can track changes to class properties
+    return reactive(elevatorInstance);
+  })
 );
 
 function generateRandomCall() {
@@ -37,7 +37,7 @@ function generateRandomCall() {
 
 onMounted(() => {
   initializeLogger();
-  setInterval(generateRandomCall, 3000); // every 5s for demo purposes
+  setInterval(generateRandomCall, 4000); // every 5s for demo purposes
 });
 </script>
 
