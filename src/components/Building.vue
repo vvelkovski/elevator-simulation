@@ -23,6 +23,7 @@ const elevators = ref(
     queue: [],
     direction: null,
     busy: false,
+    loading: false,
   }))
 );
 

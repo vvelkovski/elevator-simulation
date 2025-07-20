@@ -16,10 +16,17 @@ defineProps({
 <template>
   <div class="elevator">
     <div class="elevator-top">
-      <template v-if="elevator.direction === Direction.Up">&#8593;</template>
-      <template v-else-if="elevator.direction === Direction.Down">&#8595;</template>
-      <template v-else>—</template>
-      <span>{{ elevator.currentFloor }}</span>
+      <div class="elevator-top-content">
+        <template v-if="elevator.loading">&#8644;</template>
+      </div>
+      <div class="elevator-top-content">
+        <template v-if="elevator.direction === Direction.Up">&#8593;</template>
+        <template v-else-if="elevator.direction === Direction.Down">&#8595;</template>
+        <template v-else>&#8645;</template>
+      </div>
+      <div class="elevator-top-content">
+        <span>{{ elevator.currentFloor }}</span>
+      </div>
     </div>
     <div class="floors-container">
       <div 
@@ -28,7 +35,7 @@ defineProps({
         class="floor"
         :class="{ 'current-floor': floor === elevator.currentFloor }"
       >
-        Floor {{ floor }}
+        <div class="floor-number">{{ floor }}</div>
       </div>
     </div>
   </div>
@@ -55,6 +62,13 @@ defineProps({
   border-bottom: 1px solid var(--vt-c-white);
 }
 
+.elevator-top-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .floors-container {
   flex: 1;
   display: flex;
@@ -68,10 +82,17 @@ defineProps({
   justify-content: center;
   border-bottom: 1px solid var(--vt-c-white-mute);
   font-size: 14px;
+  color: var(--vt-c-white-mute);
   transition: background-color 0.3s ease;
 }
 
 .current-floor {
   background-color: var(--vt-c-black-mute);
+  color: var(--vt-c-green) !important;
+}
+
+.floor-number {
+  font-size: 14px;
+  font-weight: bold;
 }
 </style>

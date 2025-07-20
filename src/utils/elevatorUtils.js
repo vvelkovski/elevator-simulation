@@ -11,7 +11,7 @@ import Direction from '@/constants/directionEnum.js';
 */
 export function moveToFloor(elevator, targetFloor) {
  return new Promise(resolve => {
-   // log(`🚚 Elevator ${elevator.id} moving ${elevator.direction} to floor ${targetFloor}`);
+   log(`🚚 Elevator ${elevator.id} moving ${elevator.direction} to floor ${targetFloor}`);
    
    const movementDirection = targetFloor > elevator.currentFloor ? 1 : -1;
    
@@ -31,7 +31,9 @@ export function moveToFloor(elevator, targetFloor) {
 function loadPassengers(elevator) {
   return new Promise(resolve => {
     log(`🚪 Elevator ${elevator.id} loading/unloading passengers`);
+    elevator.loading = true;
     setTimeout(() => {
+      elevator.loading = false;
       resolve();
     }, STOP_DURATION);
   });
