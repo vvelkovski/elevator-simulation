@@ -1,6 +1,8 @@
 <script setup>
 import Elevator from './Elevator.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { assignElevator, log } from '@/utils/elevatorUtils.js';
+import Direction from '@/constants/directionEnum.js';
 
 const props = defineProps({
   totalFloors: {
@@ -23,6 +25,17 @@ const elevators = ref(
     busy: false,
   }))
 );
+
+function generateRandomCall() {
+  const floor = Math.floor(Math.random() * props.totalFloors) + 1;
+  const direction = Math.random() > 0.5 ? Direction.Up : Direction.Down;
+  log(`📞 ${direction.toUpperCase()} request on floor ${floor}`);
+  assignElevator(floor, direction, elevators.value);
+}
+
+onMounted(() => {
+  setInterval(generateRandomCall, 5000); // every 5s for demo purposes
+});
 </script>
 
 <template>
