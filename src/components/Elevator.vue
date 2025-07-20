@@ -1,9 +1,7 @@
 <script setup>
-import { onMounted } from 'vue';
-// TODO: remove this import if I decide to use props for totalFloors
-import { moveToFloor } from '@/utils/elevatorUtils.js';
+import Direction from '@/constants/directionEnum.js';
 
-const props = defineProps({
+defineProps({
   elevator: {
     type: Object,
     required: true,
@@ -13,16 +11,15 @@ const props = defineProps({
     required: true,
   },
 });
-
-onMounted(() => {
-  moveToFloor(props.elevator, 5);
-});
 </script>
 
 <template>
   <div class="elevator">
     <div class="elevator-top">
-      Motor Room
+      <template v-if="elevator.direction === Direction.Up">&#8593;</template>
+      <template v-else-if="elevator.direction === Direction.Down">&#8595;</template>
+      <template v-else>—</template>
+      <span>{{ elevator.currentFloor }}</span>
     </div>
     <div class="floors-container">
       <div 
@@ -53,7 +50,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 18px;
   color: var(--vt-c-white);
   border-bottom: 1px solid var(--vt-c-white);
 }
