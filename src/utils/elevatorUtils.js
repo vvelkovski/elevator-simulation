@@ -8,11 +8,14 @@ export function initializeLogger() {
   loggerStore = useLoggerStore();
 }
 
-export function log(message) {
+export function log(message, elevatorId = null) {
   if (loggerStore) {
-    loggerStore.log(message);
+    loggerStore.log(message, elevatorId);
   } else {
-    console.log(message); // Fallback if store not initialized
+    const formattedMessage = elevatorId 
+      ? `[Elevator ${elevatorId}] ${message}`
+      : message;
+    console.log(formattedMessage); // Fallback if store not initialized
   }
 }
 
@@ -26,7 +29,7 @@ export function log(message) {
 */
 export function moveToFloor(elevator, targetFloor) {
  return new Promise(resolve => {
-   log(`🚚 Elevator ${elevator.id} moving ${elevator.direction} to floor ${targetFloor}`);
+   log(`🚚 Moving ${elevator.direction} to floor ${targetFloor}`, elevator.id);
    
    const movementDirection = targetFloor > elevator.currentFloor ? 1 : -1;
    
@@ -45,7 +48,7 @@ export function moveToFloor(elevator, targetFloor) {
 
 function loadPassengers(elevator) {
   return new Promise(resolve => {
-    log(`🚪 Elevator ${elevator.id} loading/unloading passengers`);
+    log('🚪 Loading/unloading passengers', elevator.id);
     elevator.loading = true;
     setTimeout(() => {
       elevator.loading = false;
@@ -70,27 +73,24 @@ export async function moveElevator(elevator) {
     if (!elevator.direction) {
       const firstFloor = elevator.queue[0];
       elevator.direction = firstFloor > elevator.currentFloor ? Direction.Up : Direction.Down;
-      log(`Initial direction set to: ${elevator.direction === Direction.Up ? 'Up' : 'Down'}`);
+      log(`🎯 Initial direction set to: ${elevator.direction === Direction.Up ? 'Up' : 'Down'}`, elevator.id);
     }
 
     // STEP 2: Get floors that can be serviced in the current direction
     // This is where we filter out floors that are "behind" us in the current direction
     const floorsInCurrentDirection = getFloorsInDirection(elevator);
-    log(`Floors in current direction (${elevator.direction === Direction.Up ? 'Up' : 'Down'}):`, floorsInCurrentDirection);
 
     if (floorsInCurrentDirection.length === 0) {
       // STEP 3: No floors in current direction, switch direction
       // This prevents yo-yo behavior by ensuring we complete one direction first
       elevator.direction = elevator.direction === Direction.Up ? Direction.Down : Direction.Up;
-      log(`No floors in current direction. Switching to: ${elevator.direction === Direction.Up ? 'Up' : 'Down'}`);
+      log(`🔄 Switching direction to: ${elevator.direction === Direction.Up ? 'Up' : 'Down'}`, elevator.id);
       continue; // Go back to STEP 2 with new direction
     }
 
     // STEP 4: Service all floors in the current direction (this prevents yo-yo)
     // We process floors in optimal order for current direction
     for (const targetFloor of floorsInCurrentDirection) {
-      log(`Servicing floor ${targetFloor} in ${elevator.direction === Direction.Up ? 'Up' : 'Down'} direction`);
-      
       // Move to the target floor if not already there
       if (elevator.currentFloor !== targetFloor) {
         await moveToFloor(elevator, targetFloor);
@@ -103,7 +103,6 @@ export async function moveElevator(elevator) {
       const floorIndex = elevator.queue.indexOf(targetFloor);
       if (floorIndex > -1) {
         elevator.queue.splice(floorIndex, 1);
-        log(`Removed floor ${targetFloor} from queue. Remaining:`, elevator.queue);
       }
     }
 
@@ -113,9 +112,8 @@ export async function moveElevator(elevator) {
     if (remainingFloorsInDirection.length === 0) {
       // No more floors in current direction, prepare to switch
       if (elevator.queue.length > 0) {
-        log(`Completed ${elevator.direction === Direction.Up ? 'Up' : 'Down'} run. Preparing to switch direction.`);
+        log(`✅ Completed ${elevator.direction === Direction.Up ? 'Up' : 'Down'} run, switching direction`, elevator.id);
         elevator.direction = elevator.direction === Direction.Up ? Direction.Down : Direction.Up;
-        log(`Direction switched to: ${elevator.direction === Direction.Up ? 'Up' : 'Down'}`);
       }
     }
     // If remainingFloorsInDirection.length > 0, we continue in same direction (no yo-yo)
@@ -124,7 +122,7 @@ export async function moveElevator(elevator) {
   // STEP 7: Reset elevator state when done
   elevator.direction = null;
   elevator.busy = false;
-  log('Elevator completed all requests. Now idle.');
+  log('🏁 Completed all requests. Now idle.', elevator.id);
 }
 
 /**
@@ -214,7 +212,7 @@ export function assignElevator(floor, direction, elevators) {
       moveElevator(bestElevator);
     }
 
-    log(`✅ Assigned elevator ${bestElevator.id} to floor ${floor}`);
+    log(`📋 Assigned to floor ${floor}`, bestElevator.id);
   } else {
     log(`⚠️ No suitable elevator available for floor ${floor} (${direction})`);
   }

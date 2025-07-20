@@ -27,22 +27,22 @@ function clearLogs() {
   border: 1px solid #ddd;
   font-family: 'Courier New', monospace;
   font-size: 12px;
-  background-color: #f8f8f8;
+  background-color: var(--vt-c-black-mute);
 }
 
 .log-entry {
   margin: 2px 0;
   padding: 2px;
+  font-size: 14px;
 }
 
 .timestamp {
-  color: #666;
-  font-size: 11px;
+  color: var(--vt-c-white-mute);
   margin-right: 8px;
 }
 
 .message {
-  color: #333;
+  color: var(--vt-c-white);
 }
 
 .clear-button {
