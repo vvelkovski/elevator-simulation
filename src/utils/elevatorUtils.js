@@ -1,5 +1,20 @@
 import { FLOOR_TRAVEL_TIME, STOP_DURATION } from '@/constants/buildingSpecs.js';
 import Direction from '@/constants/directionEnum.js';
+import { useLoggerStore } from '@/stores/logger.js';
+
+let loggerStore = null;
+
+export function initializeLogger() {
+  loggerStore = useLoggerStore();
+}
+
+export function log(message) {
+  if (loggerStore) {
+    loggerStore.log(message);
+  } else {
+    console.log(message); // Fallback if store not initialized
+  }
+}
 
 /**
 * Moves an elevator to a target floor progressively, updating the current floor
@@ -203,8 +218,4 @@ export function assignElevator(floor, direction, elevators) {
   } else {
     log(`⚠️ No suitable elevator available for floor ${floor} (${direction})`);
   }
-}
-
-export function log(message) {
-  console.log(message);
 }

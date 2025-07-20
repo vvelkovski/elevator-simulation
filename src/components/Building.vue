@@ -1,7 +1,7 @@
 <script setup>
 import Elevator from './Elevator.vue';
 import { ref, onMounted } from 'vue';
-import { assignElevator, log } from '@/utils/elevatorUtils.js';
+import { assignElevator, log, initializeLogger } from '@/utils/elevatorUtils.js';
 import Direction from '@/constants/directionEnum.js';
 
 const props = defineProps({
@@ -29,13 +29,15 @@ const elevators = ref(
 
 function generateRandomCall() {
   const floor = Math.floor(Math.random() * props.totalFloors) + 1;
+  // TODO: (Vladimir) extend logic to manually set the direction when elevator is called from the bottom or top floor
   const direction = Math.random() > 0.5 ? Direction.Up : Direction.Down;
-  log(`📞 ${direction.toUpperCase()} request on floor ${floor}`);
+  log(`📞 ${direction} request on floor ${floor}`);
   assignElevator(floor, direction, elevators.value);
 }
 
 onMounted(() => {
-  setInterval(generateRandomCall, 5000); // every 5s for demo purposes
+  initializeLogger();
+  setInterval(generateRandomCall, 3000); // every 5s for demo purposes
 });
 </script>
 
