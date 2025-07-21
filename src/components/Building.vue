@@ -1,5 +1,5 @@
 <script setup>
-import Elevator from './Elevator.vue';
+import Elevator from './elevator/Elevator.vue';
 import { ref, onMounted, reactive } from 'vue';
 import { assignElevator, log, initializeLogger } from '@/utils/elevatorUtils.js';
 import { Elevator as ElevatorClass } from '@/classes/elevator.js';
@@ -37,7 +37,7 @@ function generateRandomCall() {
 
 onMounted(() => {
   initializeLogger();
-  setInterval(generateRandomCall, 7000); // every 5s for demo purposes
+  setInterval(generateRandomCall, 5000); // every 5s for demo purposes
 });
 </script>
 

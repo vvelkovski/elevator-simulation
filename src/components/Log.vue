@@ -2,7 +2,6 @@
   <h2>Event Log</h2>
   <div class="log">
     <div v-for="log in loggerStore.logs" :key="log.timestamp" class="log-entry">
-      <!-- <span class="timestamp">[{{ log.time }}]</span> -->
       <span class="message">{{ log.message }}</span>
     </div>
   </div>
@@ -34,11 +33,6 @@ function clearLogs() {
   margin: 2px 0;
   padding: 2px;
   font-size: 14px;
-}
-
-.timestamp {
-  color: var(--vt-c-white-mute);
-  margin-right: 8px;
 }
 
 .message {
