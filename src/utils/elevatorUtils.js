@@ -11,7 +11,7 @@ export function log(message, elevatorId = null) {
     loggerStore.log(message, elevatorId);
   } else {
     const formattedMessage = elevatorId 
-      ? `[Elevator ${elevatorId}] ${message}`
+      ? `[Elev ${elevatorId}] ${message}`
       : message;
     console.log(formattedMessage); // Fallback if store not initialized
   }
@@ -46,6 +46,7 @@ export function assignElevator(floor, direction, elevators) {
         bestScore = distance;
       }
     }
+    // TODO: (Vladimir) an else statement to handle the case where the elevator is not on the way.
   }
 
   if (bestElevator) {
@@ -58,9 +59,10 @@ export function assignElevator(floor, direction, elevators) {
     if (wasIdle) {
       bestElevator.startMoving();
     }
-
-    log(`📋 Assigned to floor ${floor}`, bestElevator.id);
-  } else {
-    log(`⚠️ No suitable elevator available for floor ${floor} (${direction})`);
+  } 
+  // This else statement can be removed if we implement the "TODO" above.
+  else {
+    // If there is no idle or elevator on the way, don't accept the call.
+    log(`No suitable elevator available for floor ${floor} (${direction})`);
   }
 }

@@ -20,7 +20,7 @@ export class Elevator {
     if (this.logFunction) {
       this.logFunction(message, this.id);
     } else {
-      console.log(`[Elevator ${this.id}] ${message}`);
+      console.log(`[Elev ${this.id}] ${message}`);
     }
   }
 
@@ -139,7 +139,6 @@ export class Elevator {
       if (!this.direction) {
         const firstFloor = this.queue[0];
         this.direction = firstFloor > this.currentFloor ? Direction.Up : Direction.Down;
-        this.log(`🎯 Initial direction set to: ${this.direction === Direction.Up ? 'Up' : 'Down'}`);
       }
 
       // STEP 2: Get floors that can be serviced in the current direction

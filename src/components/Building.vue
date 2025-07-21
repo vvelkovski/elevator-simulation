@@ -37,7 +37,7 @@ function generateRandomCall() {
 
 onMounted(() => {
   initializeLogger();
-  setInterval(generateRandomCall, 4000); // every 5s for demo purposes
+  setInterval(generateRandomCall, 7000); // every 5s for demo purposes
 });
 </script>
 

@@ -6,7 +6,7 @@ export const useLoggerStore = defineStore('logger', () => {
   
   function log(message, elevatorId = null) {
     const formattedMessage = elevatorId 
-      ? `[E${elevatorId}] ${message}`
+      ? `[Elev ${elevatorId}] ${message}`
       : message;
       
     logs.value.unshift({ 

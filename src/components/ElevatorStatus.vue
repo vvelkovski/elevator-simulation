@@ -32,7 +32,7 @@ defineProps({
   display: flex;
   flex-direction: column;
   font-size: 18px;
-  color: var(--vt-c-white);
+  color: var(--vt-c-green);
   border-bottom: 1px solid var(--vt-c-white);
 }
 

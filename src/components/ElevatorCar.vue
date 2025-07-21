@@ -40,12 +40,15 @@ defineProps({
 
 .current-floor {
   background-color: var(--vt-c-black-mute);
-  color: var(--vt-c-green) !important;
 }
 
 .floor-number {
   font-family: 'Digital';
   font-size: 16px;
   font-weight: bold;
+}
+
+.current-floor > .floor-number {
+  color: var(--vt-c-green) !important;
 }
 </style>

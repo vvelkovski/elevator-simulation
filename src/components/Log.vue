@@ -2,7 +2,7 @@
   <h2>Event Log</h2>
   <div class="log">
     <div v-for="log in loggerStore.logs" :key="log.timestamp" class="log-entry">
-      <span class="timestamp">[{{ log.time }}]</span>
+      <!-- <span class="timestamp">[{{ log.time }}]</span> -->
       <span class="message">{{ log.message }}</span>
     </div>
   </div>
