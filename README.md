@@ -289,14 +289,6 @@ docker restart elevator-sim
 docker inspect elevator-sim
 ```
 
-**Docker Features:**
-- ✅ **Multi-stage Build**: Optimized image size with build dependencies excluded
-- ✅ **Nginx Server**: Production-ready web server with security headers
-- ✅ **Health Checks**: Built-in container health monitoring
-- ✅ **Asset Caching**: Optimized caching strategy for static assets
-- ✅ **Security Headers**: X-Frame-Options, CSP, and other security headers
-- ✅ **Gzip Compression**: Server-side compression for better performance
-
 ### Cloud Deployment
 
 The Docker image can be deployed to any container platform:
