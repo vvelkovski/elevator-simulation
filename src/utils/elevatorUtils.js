@@ -46,7 +46,7 @@ export function assignElevator(floor, direction, elevators) {
         bestScore = distance;
       }
     }
-    // TODO: (Vladimir) an else statement to handle the case where the elevator is not on the way.
+    // TODO (Vladimir): [improvement] add an else statement to handle the case where the elevator is not on the way.
   }
 
   if (bestElevator) {

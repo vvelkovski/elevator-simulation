@@ -29,7 +29,8 @@ const elevators = ref(
 
 function generateRandomCall() {
   const floor = Math.floor(Math.random() * props.totalFloors) + 1;
-  // TODO: (Vladimir) extend logic to manually set the direction when elevator is called from the bottom or top floor
+  // TODO (Vladimir): [improvement] extend logic to manually set the direction when elevator is called from the bottom or top floor
+  // For example, on floor one the elevator can be called to go up, but on floor 10 the elevator can be called to go down.
   const direction = Math.random() > 0.5 ? Direction.Up : Direction.Down;
   log(`🔔 ${direction} request on floor ${floor}`);
   assignElevator(floor, direction, elevators.value);
