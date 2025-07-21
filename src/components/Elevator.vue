@@ -31,7 +31,7 @@ defineProps({
 
 <style scoped>
 .elevator {
-  width: 150px;
+  width: 160px;
   height: calc(100dvh - 2 * var(--content-spacing));
   border: 1px solid var(--vt-c-white);
   position: relative;

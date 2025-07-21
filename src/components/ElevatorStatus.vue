@@ -27,11 +27,12 @@ defineProps({
 
 <style scoped>
 .elevator-status {
-  padding: 0px var(--content-spacing);
+  padding: 0px 40px;
   background-color: var(--vt-c-black-mute);
   display: flex;
   flex-direction: column;
-  font-size: 18px;
+  justify-content: space-around;
+  font-size: 24px;
   color: var(--vt-c-green);
   border-bottom: 1px solid var(--vt-c-white);
 }
@@ -50,7 +51,8 @@ defineProps({
 }
 
 .digital-display {
-  font-size: 24px;
+  font-size: 26px;
+  margin-top: 5px;
   font-family: 'Digital';
 }
 </style>
