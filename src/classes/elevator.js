@@ -71,6 +71,12 @@ export class Elevator {
    */
   async moveToFloor(targetFloor) {
     return new Promise(resolve => {
+      // If already at target floor, resolve immediately
+      if (this.currentFloor === targetFloor) {
+        resolve();
+        return;
+      }
+
       this.log(`🚚 Moving ${this.direction} to floor ${targetFloor}`);
       
       const movementDirection = targetFloor > this.currentFloor ? 1 : -1;
