@@ -28,3 +28,12 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Production build analysis
+stats.html
+bundle-analyzer-report.html

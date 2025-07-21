@@ -33,6 +33,10 @@ The simulation features intelligent elevator dispatching, directional optimizati
   - [Unit Tests](#unit-tests)
   - [End-to-End Tests](#end-to-end-tests)
 - [Build and Deployment](#build-and-deployment)
+  - [Production Build](#production-build)
+  - [Docker Deployment](#docker-deployment)
+  - [Cloud Deployment](#cloud-deployment)
+  - [CI/CD Pipeline](#cicd-pipeline)
 - [Development Guidelines](#development-guidelines)
 - [API Reference](#api-reference)
 
@@ -47,6 +51,9 @@ The simulation features intelligent elevator dispatching, directional optimizati
 ✅ **Responsive Design** - Modern UI with digital-style displays  
 ✅ **State Management** - Centralized state with Pinia store  
 ✅ **Full Test Coverage** - Unit tests with Vitest and E2E tests with Cypress  
+✅ **Docker Support** - Production-ready containerization with nginx  
+✅ **CI/CD Ready** - GitHub Actions workflow for automated deployment  
+✅ **Production Optimized** - Multi-stage builds with security headers  
 
 ---
 
@@ -58,6 +65,7 @@ The simulation features intelligent elevator dispatching, directional optimizati
 |-------------|---------|--------|
 | Node.js     | 20+     | Recommended: 20.15.1 or higher |
 | npm         | 10+     | Comes with Node.js |
+| Docker      | Latest  | Optional: For containerized deployment |
 
 ### Installation
 
@@ -84,6 +92,18 @@ npm run dev
 ```
 
 The application will be available at `http://localhost:5173`
+
+### Quick Docker Setup
+
+For a quick containerized setup:
+
+```bash
+# Build and run with Docker
+docker build -t elevator-simulation .
+docker run -d -p 8080:80 --name elevator-sim elevator-simulation
+
+# Open http://localhost:8080 in your browser
+```
 
 ---
 
@@ -196,18 +216,109 @@ npm run test:e2e
 ```bash
 npm run dev
 ```
+The development server will be available at `http://localhost:5173` with hot-reload and Vue DevTools.
 
 ### Production Build
+
 ```bash
 npm run build
 ```
 
-### Preview Production Build
+#### Preview Production Build Locally
 ```bash
 npm run preview
 ```
+The preview server will be available at `http://localhost:4173` to test the production build.
+
+**Production Build Features:**
+*Vite automatically applies all optimizations when running the build command:*
+- ✅ **Code Splitting**: Vendor libraries separated from app code
+- ✅ **Asset Optimization**: Minified CSS/JS with cache-busting hashes
+- ✅ **Tree Shaking**: Unused code eliminated
+- ✅ **Gzip Compression**: Assets compressed for faster loading
+- ✅ **Vue DevTools**: Excluded from production builds
 
 The production build will be generated in the `dist/` directory, optimized for deployment.
+
+### Docker Deployment
+
+#### Build Docker Image
+```bash
+docker build -t elevator-simulation .
+```
+
+#### Run Container Locally
+```bash
+# Run on port 8080
+docker run -d -p 8080:80 --name elevator-sim elevator-simulation
+
+# Run on port 80 (production-like)
+docker run -d -p 80:80 --name elevator-prod --restart unless-stopped elevator-simulation
+```
+
+#### Test Docker Container
+```bash
+# Check container status
+docker ps
+
+# Test health endpoint
+curl http://localhost:8080/health
+
+# Test main application
+curl http://localhost:8080/
+
+# View container logs
+docker logs elevator-sim
+
+# Monitor resource usage
+docker stats elevator-sim --no-stream
+```
+
+#### Container Management
+```bash
+# Stop container
+docker stop elevator-sim
+
+# Remove container
+docker rm elevator-sim
+
+# Restart container
+docker restart elevator-sim
+
+# View container details
+docker inspect elevator-sim
+```
+
+**Docker Features:**
+- ✅ **Multi-stage Build**: Optimized image size with build dependencies excluded
+- ✅ **Nginx Server**: Production-ready web server with security headers
+- ✅ **Health Checks**: Built-in container health monitoring
+- ✅ **Asset Caching**: Optimized caching strategy for static assets
+- ✅ **Security Headers**: X-Frame-Options, CSP, and other security headers
+- ✅ **Gzip Compression**: Server-side compression for better performance
+
+### Cloud Deployment
+
+The Docker image can be deployed to any container platform:
+
+```bash
+# Tag for registry
+docker tag elevator-simulation your-registry/elevator-simulation:latest
+
+# Push to registry
+docker push your-registry/elevator-simulation:latest
+```
+
+
+### CI/CD Pipeline
+
+The project includes a GitHub Actions workflow (`.github/workflows/ci-cd.yml`) that automatically:
+
+1. **Tests**: Runs linting, unit tests, and E2E tests
+2. **Builds**: Creates optimized production builds
+3. **Containerizes**: Builds and pushes Docker images
+4. **Deploys**: Ready for deployment to a platform of choice
+
 
 ---
 

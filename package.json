@@ -10,10 +10,14 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:unit": "vitest",
+    "test:unit:ci": "vitest run --coverage",
     "prepare": "cypress install",
     "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
     "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "lint:ci": "eslint .",
+    "type-check": "vue-tsc --noEmit",
+    "analyze": "vite build --analyze"
   },
   "dependencies": {
     "pinia": "^3.0.3",
