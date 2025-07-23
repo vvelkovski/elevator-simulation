@@ -1,8 +1,9 @@
+# Not finished. Just an example of how a CI/CD pipeline could be set up.
 name: CI/CD Pipeline
 
 on:
-  push:
-    branches: [ main, master ]
+  # push:
+  #   branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
 
